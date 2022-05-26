@@ -19,6 +19,6 @@ public class UserHandshakeHandler extends DefaultHandshakeHandler {
         String randomId = UUID.randomUUID().toString();
         log.info("UserId {} opened the page!",randomId);
 
-        return new UserPrincipal(randomId);
+        return new UserPrincipal("MinSu");
     }
 }

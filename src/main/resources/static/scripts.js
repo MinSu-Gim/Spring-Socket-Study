@@ -16,7 +16,8 @@ $(document).ready(function() {
 function connect() {
     var socket = new SockJS('/connect');
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
+    stompClient.connect({username: "MinSu"}, function (frame) {
+        console.log('접속 완료');
         console.log('Connected: ' + frame);
 
         stompClient.subscribe('/topic/messages', function (message) {
