@@ -11,10 +11,6 @@ $(document).ready(function() {
     $("#send-private").click(function() {
         sendPrivateMessage();
     });
-
-    $("#notifications").click(function() {
-        resetNotificationCount();
-    });
 });
 
 function connect() {
@@ -22,7 +18,13 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
+
         stompClient.subscribe('/topic/messages', function (message) {
+            showMessage(JSON.parse(message.body).content);
+        });
+
+        stompClient.subscribe('/user/topic/private-messages', function (message) {
+            console.log("메시지 받음")
             showMessage(JSON.parse(message.body).content);
         });
     });
@@ -35,4 +37,9 @@ function showMessage(message) {
 function sendMessage() {
     console.log("sending message");
     stompClient.send("/ws/message", {}, JSON.stringify({'messageContent': $("#message").val()}));
+}
+
+function sendPrivateMessage() {
+    console.log("sending private message");
+    stompClient.send("/ws/private-message", {}, JSON.stringify({'messageContent': $("#private-message").val()}));
 }

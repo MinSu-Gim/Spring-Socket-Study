@@ -20,6 +20,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(final StompEndpointRegistry registry) {
         registry
                 .addEndpoint("/connect")
+                .setHandshakeHandler(new UserHandshakeHandler())
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
     }
